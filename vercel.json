@@ -1,10 +1,7 @@
 {
   "functions": {
     "app/api/unlock/route.js": {
-      "includeFiles": [
-        "backend/bin/qpdf",
-        "backend/lib/**"
-      ]
+      "includeFiles": "backend/**"
     }
   }
 }
