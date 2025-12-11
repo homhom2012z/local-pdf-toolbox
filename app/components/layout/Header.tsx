@@ -13,6 +13,8 @@ const navigation = [
   { name: 'Image to PDF', href: '/image-to-pdf' },
   { name: 'Password Protect', href: '/password' },
   { name: 'Compress PDF', href: '/compress' },
+  { name: 'Unlock PDF', href: '/unlock' },
+  { name: 'Metadata Editor', href: '/metadata' },
 ]
 
 export default function Header() {
@@ -44,12 +46,12 @@ export default function Header() {
             <Bars3Icon className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <div className="hidden lg:flex lg:gap-x-8 xl:gap-x-12 2xl:gap-x-16">
+        <div className="hidden lg:flex lg:gap-x-4 xl:gap-x-6">
           {navigation.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-primary-600 transition-colors whitespace-nowrap"
+              className="text-xs font-semibold leading-6 text-gray-900 hover:text-primary-600 transition-colors whitespace-nowrap px-2 py-1 rounded hover:bg-gray-50"
             >
               {item.name}
             </Link>

@@ -12,7 +12,7 @@ export const themeColor = '#3b82f6'
 export const metadata: Metadata = {
   title: 'Local PDF Toolbox - Privacy-First PDF Tools',
   description: 'A privacy-focused, local-first PDF utility website that operates entirely on your local machine. No files are uploaded to external servers.',
-  keywords: ['PDF', 'local-first', 'privacy', 'browser', 'tools', 'merge', 'split', 'convert'],
+  keywords: ['PDF', 'local-first', 'privacy', 'browser', 'tools', 'merge', 'split', 'convert', 'unlock', 'metadata', 'compress', 'extract'],
   authors: [{ name: 'Local PDF Toolbox Team' }],
   creator: 'Local PDF Toolbox',
   publisher: 'Local PDF Toolbox',

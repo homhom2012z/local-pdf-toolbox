@@ -154,3 +154,20 @@ For issues and questions:
 ---
 
 **Built with ❤️ for privacy-conscious users** 
+
+## Unlock PDF Backend Server
+
+This project includes a backend server for unlocking password-protected PDFs using [qpdf](https://qpdf.sourceforge.io/).
+
+### How to use
+1. Make sure you have `qpdf` installed on your system (e.g., `brew install qpdf` on macOS).
+2. Start the backend server:
+   ```sh
+   node backend/unlock-server.js
+   ```
+3. The server will listen on port 3001 by default.
+4. The frontend will POST the PDF file and password to `/unlock` to receive the unlocked PDF.
+
+### Security
+- Uploaded files are deleted after processing.
+- Use HTTPS in production. 

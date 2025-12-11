@@ -335,3 +335,18 @@ If you encounter issues:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details. 
+
+## Unlock PDF Backend Server Setup
+
+1. Install [qpdf](https://qpdf.sourceforge.io/):
+   - macOS: `brew install qpdf`
+   - Ubuntu: `sudo apt-get install qpdf`
+   - Windows: [Download from qpdf releases](https://github.com/qpdf/qpdf/releases)
+2. Install backend dependencies:
+   ```sh
+   npm install express multer
+   ```
+3. Start the backend server:
+   ```sh
+   node backend/unlock-server.js
+   ``` 

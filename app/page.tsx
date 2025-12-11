@@ -76,6 +76,14 @@ const tools = [
     icon: ArchiveBoxIcon,
     color: 'bg-teal-500',
     features: ['Quality settings', 'Size optimization', 'Progress tracking']
+  },
+  {
+    name: 'Metadata Editor',
+    description: 'Edit PDF metadata like title, author, and keywords',
+    href: '/metadata',
+    icon: DocumentTextIcon,
+    color: 'bg-pink-500',
+    features: ['Edit document info', 'Batch metadata', 'Export changes']
   }
 ]
 
