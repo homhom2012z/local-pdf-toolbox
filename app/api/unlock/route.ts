@@ -9,7 +9,7 @@ import { promisify } from "util";
 const execFileAsync = promisify(execFile);
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
-const QPDF_BINARY_PATH = "backend/bin/qpdf";
+const QPDF_BINARY_PATH = "/var/task/backend/bin/qpdf";
 
 export const runtime = "nodejs";
 
