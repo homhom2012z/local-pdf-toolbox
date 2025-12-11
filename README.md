@@ -155,19 +155,23 @@ For issues and questions:
 
 **Built with ❤️ for privacy-conscious users** 
 
-## Unlock PDF Backend Server
+## Unlock PDF API (qpdf)
 
-This project includes a backend server for unlocking password-protected PDFs using [qpdf](https://qpdf.sourceforge.io/).
+The Unlock PDF tool now runs entirely inside the Next.js deployment through `/api/unlock` (see `app/api/unlock/route.ts`). The route shells out to [qpdf](https://qpdf.sourceforge.io/) to remove the password protection and streams the unlocked PDF back to the browser.
 
-### How to use
-1. Make sure you have `qpdf` installed on your system (e.g., `brew install qpdf` on macOS).
-2. Start the backend server:
-   ```sh
-   node backend/unlock-server.js
-   ```
-3. The server will listen on port 3001 by default.
-4. The frontend will POST the PDF file and password to `/unlock` to receive the unlocked PDF.
+### Requirements
+1. Install `qpdf` on your development machine (macOS: `brew install qpdf`, Ubuntu: `sudo apt-get install qpdf`, Windows: download from the official releases) or use the bundled binary in `backend/bin/qpdf`.
+2. Ensure the binary is available on `PATH`, or point the app to a custom executable by setting the `QPDF_BINARY_PATH` environment variable (for example `QPDF_BINARY_PATH=backend/bin/qpdf`).
+
+### Usage
+1. Run `npm run dev` or start your production build normally with `npm run start`.
+2. Open the Unlock PDF tool in the UI. The frontend automatically POSTs to `/api/unlock` with the PDF and password.
+3. The API route writes files to the runtime `/tmp` directory, invokes `qpdf --decrypt`, and streams the unlocked file back to the client.
+
+### Deployment Notes
+- When deploying to Vercel (or any serverless host), bundle a Linux-compatible `qpdf` binary with your repository and set `QPDF_BINARY_PATH` to its absolute path. The provided `backend/bin/qpdf` was copied from the local development machine—replace it with a Linux build before deploying.
+- Because the Unlock tool relies on a serverless function, it is not available when using a static export (`next export`). Use `next start` or Vercel’s serverless runtime instead.
 
 ### Security
-- Uploaded files are deleted after processing.
-- Use HTTPS in production. 
+- Temporary files are deleted immediately after each request finishes.
+- Serve the API over HTTPS and keep your bundled `qpdf` binary in a trusted location.

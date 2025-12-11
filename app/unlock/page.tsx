@@ -65,7 +65,7 @@ export default function UnlockPdfPage() {
       formData.append("password", password);
 
       setProcessing({ progress: 25, currentStep: "Unlocking PDF..." });
-      const response = await fetch("http://localhost:3001/unlock", {
+      const response = await fetch("/api/unlock", {
         method: "POST",
         body: formData,
       });
@@ -241,7 +241,7 @@ export default function UnlockPdfPage() {
             <li>Download the unlocked PDF file</li>
           </ol>
           <div className="mt-3 text-xs text-yellow-700">
-            <strong>Privacy Note:</strong> PDF unlocking is performed on a secure backend server. Files are deleted after processing.
+            <strong>Privacy Note:</strong> Unlocking runs through the built-in qpdf integration on this device or deployment, and temporary files are deleted right after processing.
           </div>
         </div>
       </div>
