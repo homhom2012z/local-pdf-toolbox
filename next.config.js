@@ -33,11 +33,8 @@ const nextConfig = {
 
     return config;
   },
-  // Enable static export for deployment
-  output: 'export',
-  trailingSlash: true,
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
   // Environment variables
   env: {

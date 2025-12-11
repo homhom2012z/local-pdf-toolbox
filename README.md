@@ -170,7 +170,7 @@ The Unlock PDF tool now runs entirely inside the Next.js deployment through `/ap
 
 ### Deployment Notes
 - When deploying to Vercel (or any serverless host), bundle a Linux-compatible `qpdf` binary with your repository and set `QPDF_BINARY_PATH` to its absolute path. The provided `backend/bin/qpdf` was copied from the local development machine—replace it with a Linux build before deploying.
-- Because the Unlock tool relies on a serverless function, it is not available when using a static export (`next export`). Use `next start` or Vercel’s serverless runtime instead.
+- Because `/api/unlock` requires a server runtime, skip `next export` and deploy with `next start` or Vercel’s default serverless build output.
 
 ### Security
 - Temporary files are deleted immediately after each request finishes.
