@@ -16,6 +16,8 @@ const DEFAULT_QPDF_PATH =
 const QPDF_BINARY_PATH =
   process.env.QPDF_BINARY_PATH?.trim() || DEFAULT_QPDF_PATH;
 
+console.log("current dir:", process.cwd());
+
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
