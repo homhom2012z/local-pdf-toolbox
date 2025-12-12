@@ -11,6 +11,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { usePdfStore } from "@/store/pdf-store";
 import { validatePdfFile, formatFileSize } from "@/lib/pdf-utils";
+import { unlockPdfInBrowser } from "@/lib/unlock-client";
 
 export default function UnlockPdfPage() {
   const { files, addFile, removeFile, clearFiles, processing, setProcessing } =
@@ -57,27 +58,19 @@ export default function UnlockPdfPage() {
       progress: 0,
       currentStep: "Uploading file...",
     });
+    setProcessing({ error: null });
+    setResult(null);
 
     try {
       const file = files[0].file;
-      const formData = new FormData();
-      formData.append("pdf", file);
-      formData.append("password", password);
-
-      setProcessing({ progress: 25, currentStep: "Unlocking PDF..." });
-      const response = await fetch("/api/unlock", {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!response.ok) {
-        throw new Error(await response.text());
-      }
-
-      setProcessing({ progress: 75, currentStep: "Receiving unlocked PDF..." });
-      const blob = await response.blob();
-      setProcessing({ progress: 100, currentStep: "Complete!" });
-      setResult(blob);
+      const unlocked = await unlockPdfInBrowser(file, password, (progress, step) =>
+        setProcessing({
+          isProcessing: true,
+          progress,
+          currentStep: step,
+        })
+      );
+      setResult(unlocked);
     } catch (error: any) {
       console.log("Unlock PDF, error", error);
       setProcessing({
@@ -241,7 +234,7 @@ export default function UnlockPdfPage() {
             <li>Download the unlocked PDF file</li>
           </ol>
           <div className="mt-3 text-xs text-yellow-700">
-            <strong>Privacy Note:</strong> Unlocking runs through the built-in qpdf integration on this device or deployment, and temporary files are deleted right after processing.
+            <strong>Privacy Note:</strong> Unlocking happens entirely in your browser using PDF.js and pdf-lib. No files are uploaded, and temporary canvases are discarded immediately.
           </div>
         </div>
       </div>

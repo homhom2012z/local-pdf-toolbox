@@ -33,6 +33,9 @@ const nextConfig = {
 
     return config;
   },
+  // Enable static export since all tools run client-side
+  output: 'export',
+  trailingSlash: true,
   images: {
     unoptimized: true,
   },

@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "app/api/unlock/route.js": {
-      "includeFiles": "backend/**"
-    }
-  }
-}

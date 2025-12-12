@@ -155,23 +155,23 @@ For issues and questions:
 
 **Built with ❤️ for privacy-conscious users** 
 
-## Unlock PDF API (qpdf)
+## Unlock PDF (Client-Side)
 
-The Unlock PDF tool now runs entirely inside the Next.js deployment through `/api/unlock` (see `app/api/unlock/route.ts`). The route shells out to [qpdf](https://qpdf.sourceforge.io/) to remove the password protection and streams the unlocked PDF back to the browser.
+The Unlock PDF tool now runs fully in the browser: it decrypts the document with [PDF.js](https://mozilla.github.io/pdf.js/) and rebuilds a clean PDF with [pdf-lib](https://pdf-lib.js.org/). No files leave the user’s device and the site can be hosted as a static export.
 
 ### Requirements
-1. Install `qpdf` on your development machine (macOS: `brew install qpdf`, Ubuntu: `sudo apt-get install qpdf`, Windows: download from the official releases) or use the bundled binary in `backend/bin/qpdf`.
-2. Ensure the binary is available on `PATH`, or point the app to a custom executable by setting the `QPDF_BINARY_PATH` environment variable (for example `QPDF_BINARY_PATH=backend/bin/qpdf`).
+- A modern browser with Canvas support (Chrome, Edge, Firefox, Safari).
+- For optimal quality keep the default rendering scale at 2×; adjust in `app/lib/unlock-client.ts` if needed.
 
 ### Usage
-1. Run `npm run dev` or start your production build normally with `npm run start`.
-2. Open the Unlock PDF tool in the UI. The frontend automatically POSTs to `/api/unlock` with the PDF and password.
-3. The API route writes files to the runtime `/tmp` directory, invokes `qpdf --decrypt`, and streams the unlocked file back to the client.
+1. Run `npm run dev` while building or `npm run build && npm run export` for a static bundle.
+2. Open the Unlock PDF tool, upload the encrypted PDF, and provide its password.
+3. The browser renders each page to an offscreen canvas, rebuilds the PDF without encryption, and lets you download the unlocked file.
 
 ### Deployment Notes
-- When deploying to Vercel (or any serverless host), bundle a Linux-compatible `qpdf` binary with your repository and set `QPDF_BINARY_PATH` to its absolute path. The provided `backend/bin/qpdf` was copied from the local development machine—replace it with a Linux build before deploying.
-- Because `/api/unlock` requires a server runtime, skip `next export` and deploy with `next start` or Vercel’s default serverless build output.
+- Because unlocking is 100% client-side, static hosting platforms (Vercel static, Netlify, GitHub Pages, etc.) work out of the box.
+- The tool fetches PDF.js from the official CDN at runtime. If you need offline support, host the `pdf.js` and `pdf.worker.js` files yourself and update the URLs in `app/lib/unlock-client.ts`.
 
 ### Security
-- Temporary files are deleted immediately after each request finishes.
-- Serve the API over HTTPS and keep your bundled `qpdf` binary in a trusted location.
+- Processing happens entirely in the browser; nothing is uploaded to any server.
+- Temporary canvases are kept in-memory only and discarded after the PDF is rebuilt.
